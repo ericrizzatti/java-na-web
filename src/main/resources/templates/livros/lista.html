@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Livros')}"></head>
+<body>
+<aside th:replace="~{fragments :: menu}"></aside>
+<main>
+    <h2>Livros</h2>
+    <p class="sub">Listagem de livros cadastrados.</p>
+    <div th:if="${msg}" class="alert ok" th:text="${msg}"></div>
+    <div th:if="${erro}" class="alert err" th:text="${erro}"></div>
+    <div class="bar"><span></span><a class="btn" th:href="@{/livros/novo}">Cadastrar livro</a></div>
+    <div class="tbl">
+        <table>
+            <tr><th>Título</th><th>ISBN</th><th>Ano de publicação</th><th>Exemplares</th><th>Autor</th><th>Categoria</th><th></th></tr>
+            <tr th:each="i : ${itens}">
+                <td th:text="${i.titulo}"></td>
+                <td th:text="${i.isbn}"></td>
+                <td th:text="${i.anoPublicacao}"></td>
+                <td th:text="${i.quantidadeExemplares}"></td>
+                <td th:text="${i.autor.nome}"></td>
+                <td th:text="${i.categoria.nome}"></td>
+                <td class="act">
+                    <a class="btn sec sm" th:href="@{/livros/{id}/editar(id=${i.id})}">Editar</a>
+                    <form class="inline" method="post" th:action="@{/livros/{id}/excluir(id=${i.id})}" onsubmit="return confirm('Excluir este registro?')">
+                        <button class="btn del sm">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(itens)}"><td colspan="7">Nenhum registro cadastrado. Use o botão acima para cadastrar.</td></tr>
+        </table>
+    </div>
+</main>
+</body>
+</html>

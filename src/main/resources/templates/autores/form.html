@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Autores')}"></head>
+<body>
+<aside th:replace="~{fragments :: menu}"></aside>
+<main>
+    <h2 th:text="${item.id == null} ? 'Cadastrar autor' : 'Editar autor'">Cadastrar autor</h2>
+    <p class="sub">Preencha os dados e salve.</p>
+    <form th:action="@{/autores/salvar}" th:object="${item}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <label>Nome<input type="text" th:field="*{nome}" required></label>
+        <label>Nacionalidade<input type="text" th:field="*{nacionalidade}"></label>
+        <div class="actions">
+            <button class="btn">Salvar autor</button>
+            <a class="btn sec" th:href="@{/autores}">Cancelar</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

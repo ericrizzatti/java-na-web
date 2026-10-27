@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Categorias')}"></head>
+<body>
+<aside th:replace="~{fragments :: menu}"></aside>
+<main>
+    <h2 th:text="${item.id == null} ? 'Cadastrar categoria' : 'Editar categoria'">Cadastrar categoria</h2>
+    <p class="sub">Preencha os dados e salve.</p>
+    <form th:action="@{/categorias/salvar}" th:object="${item}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <label>Nome<input type="text" th:field="*{nome}" required></label>
+        <label>Descrição<input type="text" th:field="*{descricao}"></label>
+        <div class="actions">
+            <button class="btn">Salvar categoria</button>
+            <a class="btn sec" th:href="@{/categorias}">Cancelar</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

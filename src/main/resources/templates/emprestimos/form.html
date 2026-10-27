@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Empréstimos')}"></head>
+<body>
+<aside th:replace="~{fragments :: menu}"></aside>
+<main>
+    <h2 th:text="${item.id == null} ? 'Cadastrar empréstimo' : 'Editar empréstimo'">Cadastrar empréstimo</h2>
+    <p class="sub">Preencha os dados e salve.</p>
+    <form th:action="@{/emprestimos/salvar}" th:object="${item}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <label>Leitor
+            <select th:field="*{leitor.id}" required>
+                <option value="">Selecione</option>
+                <option th:each="o : ${leitores}" th:value="${o.id}" th:text="${o.nome}"></option>
+            </select>
+        </label>
+        <label>Livro
+            <select th:field="*{livro.id}" required>
+                <option value="">Selecione</option>
+                <option th:each="o : ${livros}" th:value="${o.id}" th:text="${o.titulo}"></option>
+            </select>
+        </label>
+        <label>Data do empréstimo<input type="date" th:field="*{dataEmprestimo}" required></label>
+        <label>Devolução prevista<input type="date" th:field="*{dataPrevistaDevolucao}" required></label>
+        <label>Devolução realizada<input type="date" th:field="*{dataDevolucao}"></label>
+        <label>Situação
+            <select th:field="*{status}" required>
+                <option th:each="s : ${statusList}" th:value="${s}" th:text="${s}"></option>
+            </select>
+        </label>
+        <div class="actions">
+            <button class="btn">Salvar empréstimo</button>
+            <a class="btn sec" th:href="@{/emprestimos}">Cancelar</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

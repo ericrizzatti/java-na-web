@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Empréstimos')}"></head>
+<body>
+<aside th:replace="~{fragments :: menu}"></aside>
+<main>
+    <h2>Empréstimos</h2>
+    <p class="sub">Listagem de empréstimos cadastrados.</p>
+    <div th:if="${msg}" class="alert ok" th:text="${msg}"></div>
+    <div th:if="${erro}" class="alert err" th:text="${erro}"></div>
+    <div class="bar"><span></span><a class="btn" th:href="@{/emprestimos/novo}">Cadastrar empréstimo</a></div>
+    <div class="tbl">
+        <table>
+            <tr><th>Leitor</th><th>Livro</th><th>Data do empréstimo</th><th>Devolução prevista</th><th>Devolução realizada</th><th>Situação</th><th></th></tr>
+            <tr th:each="i : ${itens}">
+                <td th:text="${i.leitor.nome}"></td>
+                <td th:text="${i.livro.titulo}"></td>
+                <td th:text="${#temporals.format(i.dataEmprestimo, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(i.dataPrevistaDevolucao, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(i.dataDevolucao, 'dd/MM/yyyy')}"></td>
+                <td th:text="${i.status}"></td>
+                <td class="act">
+                    <a class="btn sec sm" th:href="@{/emprestimos/{id}/editar(id=${i.id})}">Editar</a>
+                    <form class="inline" method="post" th:action="@{/emprestimos/{id}/excluir(id=${i.id})}" onsubmit="return confirm('Excluir este registro?')">
+                        <button class="btn del sm">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(itens)}"><td colspan="7">Nenhum registro cadastrado. Use o botão acima para cadastrar.</td></tr>
+        </table>
+    </div>
+</main>
+</body>
+</html>

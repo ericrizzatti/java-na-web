@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Leitores')}"></head>
+<body>
+<aside th:replace="~{fragments :: menu}"></aside>
+<main>
+    <h2 th:text="${item.id == null} ? 'Cadastrar leitor' : 'Editar leitor'">Cadastrar leitor</h2>
+    <p class="sub">Preencha os dados e salve.</p>
+    <form th:action="@{/leitores/salvar}" th:object="${item}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <label>Nome<input type="text" th:field="*{nome}" required></label>
+        <label>CPF<input type="text" th:field="*{cpf}" required></label>
+        <label>E-mail<input type="email" th:field="*{email}"></label>
+        <label>Telefone<input type="text" th:field="*{telefone}"></label>
+        <div class="actions">
+            <button class="btn">Salvar leitor</button>
+            <a class="btn sec" th:href="@{/leitores}">Cancelar</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

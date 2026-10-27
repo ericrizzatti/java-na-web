@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Livros')}"></head>
+<body>
+<aside th:replace="~{fragments :: menu}"></aside>
+<main>
+    <h2 th:text="${item.id == null} ? 'Cadastrar livro' : 'Editar livro'">Cadastrar livro</h2>
+    <p class="sub">Preencha os dados e salve.</p>
+    <form th:action="@{/livros/salvar}" th:object="${item}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <label>Título<input type="text" th:field="*{titulo}" required></label>
+        <label>ISBN<input type="text" th:field="*{isbn}" required></label>
+        <label>Ano de publicação<input type="number" th:field="*{anoPublicacao}"></label>
+        <label>Exemplares<input type="number" th:field="*{quantidadeExemplares}" required></label>
+        <label>Autor
+            <select th:field="*{autor.id}" required>
+                <option value="">Selecione</option>
+                <option th:each="o : ${autores}" th:value="${o.id}" th:text="${o.nome}"></option>
+            </select>
+        </label>
+        <label>Categoria
+            <select th:field="*{categoria.id}" required>
+                <option value="">Selecione</option>
+                <option th:each="o : ${categorias}" th:value="${o.id}" th:text="${o.nome}"></option>
+            </select>
+        </label>
+        <div class="actions">
+            <button class="btn">Salvar livro</button>
+            <a class="btn sec" th:href="@{/livros}">Cancelar</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>
